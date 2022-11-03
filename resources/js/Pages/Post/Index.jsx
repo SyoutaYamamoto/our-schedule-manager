@@ -1,10 +1,11 @@
 import React from "react";
 import { Inertia } from "@inertiajs/inertia";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Link } from '@inertiajs/inertia-react'; // 追加
+
 
 const Index = (props) => {
-    const { posts } = props; // 追加
-    console.log(props); // 確認用に追加
+    const { posts } = props;
 
     return (
         <Authenticated auth={props.auth} header={
@@ -15,9 +16,15 @@ const Index = (props) => {
             
             <div className="p-12">
                 <h1>Blog Name</h1>
+
                 { posts.map((post) => (
                     <div key={post.id}>
-                        <h2>{ post.title }</h2>
+
+                        {/* 編集 */}
+                        <h2>
+                            <Link href={`/posts/${post.id}`}>{ post.title }</Link>
+                        </h2>
+
                         <p>{ post.body }</p>
                     </div>
                 )) }

@@ -19,4 +19,9 @@ class PostController extends Controller
         return Inertia::render("Post/Index",["posts" => $post->get()]);
         
     }
+    public function show(Post $post)
+    {
+        return Inertia::render("Post/Show", ["post" => $post]);
+        
+    }
 }
