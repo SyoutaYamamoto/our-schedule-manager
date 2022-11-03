@@ -24,4 +24,10 @@ class PostController extends Controller
         return Inertia::render("Post/Show", ["post" => $post]);
         
     }
+    public function create()
+    {
+        return Inertia::render("Post/Create");
+        
+    }
+
 }
