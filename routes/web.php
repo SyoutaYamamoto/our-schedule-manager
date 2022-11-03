@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +31,16 @@ Route::group(["middleware" => ["auth"]], function() {
        return Inertia::render("Post/Index");
      }) ;*/
     //　カリキュラム追加② 不可　Target class [PostController] does not exist.
-    //Route::get("/posts", [PostController::class, "index"]);
-    Route::get("/posts",'App\Http\Controllers\PostController@index');
+    Route::get("/posts", [PostController::class, "index"]);
+    //Route::get("/posts",'App\Http\Controllers\PostController@index');
     //カリキュラム追加③ 不可　Target class [PostController] does not exist.
-    //Route::get("/posts/{post}", [PostController::class, "show"]);
-    Route::get("/posts/{post}", 'App\Http\Controllers\PostController@show');
+   Route::get("/posts/create", [PostController::class, "create"]); 
+   Route::get("/posts/{post}", [PostController::class, "show"]);
+    
+    //Route::get("/posts/{post}", 'App\Http\Controllers\PostController@show');
+    //カリキュラム追加④ 不可　404Not Found 
+    
+    //Route::get("/posts/create",'App\Http\Controllers\PostController@create');
 
 });
 
