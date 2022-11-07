@@ -37,7 +37,8 @@ Route::group(["middleware" => ["auth"]], function() {
    Route::get("/posts/create", [PostController::class, "create"]); 
    Route::get("/posts/{post}", [PostController::class, "show"]);//階層同じなら変数{}持たせるよりも上に書く
    Route::post("/posts", [PostController::class, "store"]);
-    
+   Route::get('/posts/{post}/edit', [PostController::class, "edit"]);
+   Route::put('/posts/{post}', [PostController::class, "update"]);
     //Route::get("/posts/{post}", 'App\Http\Controllers\PostController@show');
     //カリキュラム追加④ 不可　404Not Found 
     

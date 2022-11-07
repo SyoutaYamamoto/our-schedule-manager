@@ -36,5 +36,17 @@ class PostController extends Controller
         $post->fill($input)->save();
         
     }
+    public function edit(Post $post)
+    {
+        return Inertia::render("Post/Edit", ["posts" => $post]);
+        
+    }
+    public function update(PostRequest $request, Post $post)
+    {
+        $input = $request->all();
+        $post->fill($input)->save();
+        return redirect("/posts/" . $post->id);
+        
+    }
 
 }
