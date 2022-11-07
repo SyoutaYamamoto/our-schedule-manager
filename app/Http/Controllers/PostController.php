@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia; //追加
 use App\Models\Post; //追加
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -27,6 +28,12 @@ class PostController extends Controller
     public function create()
     {
         return Inertia::render("Post/Create");
+        
+    }
+    public function store(PostRequest $request, Post $post)
+    {
+        $input = $request->all();
+        $post->fill($input)->save();
         
     }
 
