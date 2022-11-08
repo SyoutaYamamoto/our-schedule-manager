@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia; //追加
 use App\Models\Post; //追加
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -14,27 +15,24 @@ class PostController extends Controller
     {
         return Inertia::render("Post/Index");
     }*/
-    public function index(Post $post)
+    public function index()
     {
-        // 編集
-        return Inertia::render("Post/Index",["posts" => $post->get()]);
-        
+        return Inertia::render("Post/Index",["posts" => Post::with("category")->get()]);
     }
     public function show(Post $post)
     {
-        return Inertia::render("Post/Show", ["post" => $post]);
-        
+    // Eagerローディングを使って、Controller内でリレーション先のデータを紐付ける
+        return inertia("Post/Show", ["post" => $post->load('category')]);
     }
-    public function create()
+    public function create(Category $category)
     {
-        return Inertia::render("Post/Create");
-        
+        return Inertia::render("Post/Create",["categories" => $category->get()]);
     }
     public function store(PostRequest $request, Post $post)
     {
         $input = $request->all();
         $post->fill($input)->save();
-        
+        return redirect("/posts");
     }
     public function edit(Post $post)
     {
