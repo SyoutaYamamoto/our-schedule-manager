@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('gymnastics_grades', function (Blueprint $table) {
+        Schema::create('announcement_user', function (Blueprint $table) {
             $table->id();
-            $table->string('grade', 50)->nullable();
+            $table->foreignId('user_id');
+            $table->foreignId('announcement_id');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gymnastics_grades');
+        Schema::dropIfExists('announcement_user');
     }
 };

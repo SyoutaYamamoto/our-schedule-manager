@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->foreignId('gymnastics_grade_id')->constrained("gymnastics_grades")->nullable();
+        Schema::create('announcements', function (Blueprint $table) {
+            $table->id();
+            $table->string('title', 50);
+            $table->string('body', 50);
+            $table->integer('importance');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('announcements');
     }
 };

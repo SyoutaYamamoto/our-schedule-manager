@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'swimming_grade_id',
-        'gymnastics__grade_id'
+        'gymnastics_grade_id'
     ];
 
     /**

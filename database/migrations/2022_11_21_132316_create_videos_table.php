@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->foreignId('swimming_grade_id')->constrained("swimming_grades")->nullable();
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+            $table->string('title', 50);
+            $table->string('body', 50);
+            $table->string('image_path');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('videos');
     }
 };
