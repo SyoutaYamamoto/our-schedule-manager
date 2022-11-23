@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+                Gymnastics_gradeSeeder::class,
+                Swimming_gradeSeeder::class,
+        ]);
     }
 }
