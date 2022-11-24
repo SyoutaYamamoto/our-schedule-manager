@@ -4,6 +4,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\MypageController;
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +51,18 @@ Route::group(["middleware" => ["auth"]], function() {
     //カリキュラム追加④ 不可　404Not Found 
     
     //Route::get("/posts/create",'App\Http\Controllers\PostController@create');
+    Route::get("/home", [HomeController::class, "home"]);
+    Route::get("/schedule", [CalendarController::class, "schedule"]);
+    Route::get("/content",[ContentController::class, "content"]);
+    Route::get("/content/movies",[ContentController::class, "movies"]);
+    Route::get("/content/notes",[ContentController::class, "notes"]);
+    Route::get("/content/create-movie",[ContentController::class, "createmovie"]);
+    Route::get("/content/create-note",[ContentController::class, "createnote"]);
+    Route::get("/mypage", [MypageController::class, "mypage"]);
+    Route::get("/info", [InfoController::class, "info"]);
+    Route::get("/info/create-info", [InfoController::class, "createinfo"]);
+    Route::get("/message", [MessageController::class, "message"]);
+    Route::get("/admin", [AdminController::class, "admin"]);
 
 });
 
