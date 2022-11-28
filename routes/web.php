@@ -52,7 +52,7 @@ Route::group(["middleware" => ["auth"]], function() {
     
     //Route::get("/posts/create",'App\Http\Controllers\PostController@create');
     Route::get("/home", [HomeController::class, "home"]);
-    Route::get("/schedule", [CalendarController::class, "schedule"]);
+    Route::get("/schedule", [CalendarController::class, "schedule"])->name(events.update);
     Route::get("/content",[ContentController::class, "content"]);
     Route::get("/content/movies",[ContentController::class, "movies"]);
     Route::get("/content/notes",[ContentController::class, "notes"]);
