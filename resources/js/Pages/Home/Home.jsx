@@ -10,17 +10,21 @@ const Home = () => {
       <p>home</p>
       <p>こんにちは</p>
       <div>
-       <Link href="/mypage">Mypageへ</Link>
-       <br />
-       <Link href="/admin">Adminへ</Link>
-       <br />
-       <Link href="/schedule">Scheduleへ</Link>
-       <br />
-       <Link href="/content">Contentへ</Link>
-       <br />
-       <Link href="/message">Messageへ</Link>
-       <br />
-       <Link href="/info">Infoへ</Link>
+           <Link href="/mypage">Mypageへ</Link>
+           <br />
+           <Link href="/admin">Adminへ</Link>
+           <br />
+           <Link href="/schedule">Scheduleへ</Link>
+           <br />
+           <Link href="/content">Contentへ</Link>
+           <br />
+           <Link href="/message">Messageへ</Link>
+           <br />
+           <Link href="/info">Infoへ</Link>
+           <br />
+           <Link href="/chat">Chatsへ</Link>
+           <br />
+           <Link href="/messages">メッセージへ</Link>
        </div>
     </>
   );

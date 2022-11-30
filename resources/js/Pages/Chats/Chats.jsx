@@ -1,31 +1,9 @@
-/*import React, {useState} from "react";
-import { Inertia } from "@inertiajs/inertia";
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link } from '@inertiajs/inertia-react'
-
-const Message = () => {
-
-    return (
-    <>
-      <p>Message</p>
-      <p>こんにちは</p>
-      <div>
-       <Link href="/home">ホームへ</Link>
-       </div>
-    </>
-  );
-}
-
-export default Message;*/
-
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ChatMessages from '@/Components/Chats/ChatMessages';
 import ChatForm from '@/Components/Chats/ChatForm';
 import { Head } from '@inertiajs/inertia-react';
-import { Inertia } from "@inertiajs/inertia";
-import { Link } from '@inertiajs/inertia-react'
 
 export default function Chats({ auth, errors }) {
     const user = auth.user;
@@ -48,11 +26,11 @@ export default function Chats({ auth, errors }) {
     
         // 以下を追記
         // ブロードキャスト受信
-        window.Echo
+        /*window.Echo
             .private('chat')  // 作成したイベントのチャンネル名と合わせる
             .listen('MessageSent', (e) => {  // 第一引数はイベントのクラス名
                 getChatMessages(); // ブロードキャスト通知が来たら再読込みする
-            });
+            });*/
     }, []);
 
     return (
@@ -69,9 +47,6 @@ export default function Chats({ auth, errors }) {
                 </div>
                 <div className="mx-[8%] bg-white border-t-2">
                     <ChatForm user={user} sendMessage={sendMessage} />
-                </div>
-                <div>
-                <Link href="/home">ホームへ</Link>
                 </div>
             </div>
         </AuthenticatedLayout>

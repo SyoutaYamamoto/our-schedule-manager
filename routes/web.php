@@ -11,6 +11,7 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +52,8 @@ Route::group(["middleware" => ["auth"]], function() {
     //カリキュラム追加④ 不可　404Not Found 
     
     //Route::get("/posts/create",'App\Http\Controllers\PostController@create');
-    Route::get("/home", [HomeController::class, "home"]);
-    Route::get("/schedule", [CalendarController::class, "schedule"])->name(events.update);
+    Route::get("/home", [HomeController::class, "home"])->name('home');
+    Route::get("/schedule", [CalendarController::class, "schedule"]);
     Route::get("/content",[ContentController::class, "content"]);
     Route::get("/content/movies",[ContentController::class, "movies"]);
     Route::get("/content/notes",[ContentController::class, "notes"]);
@@ -63,6 +64,10 @@ Route::group(["middleware" => ["auth"]], function() {
     Route::get("/info/create-info", [InfoController::class, "createinfo"]);
     Route::get("/message", [MessageController::class, "message"]);
     Route::get("/admin", [AdminController::class, "admin"]);
+    Route::get("/chat", [ChatController::class, "chat"]);
+    Route::inertia('/chat', "Chats/Chats")->name('chat.index');
+    Route::get('/messages', [ChatController::class, 'fetchMessages'])->name('chat.fetch');
+    Route::post('/messages', [ChatController::class, 'sendMessage'])->name('chat.store');
 
 });
 
