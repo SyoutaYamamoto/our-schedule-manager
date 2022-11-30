@@ -14,11 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('messages', function (Blueprint $table) {
-            $table->id();
+            /*$table->id();
             $table->string('title', 50);
             $table->foreignId('sender_id');
             $table->foreignId('reciever_id');
             $table->string('body', 50);
+            $table->timestamps();*/
+            $table->id();
+            $table->text('message');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

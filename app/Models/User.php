@@ -44,7 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function event()
-{
-    return $this->belongsTo(Event::class);
-}
+    {
+        return $this->belongsTo(Event::class);
+    }
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    } 
 }

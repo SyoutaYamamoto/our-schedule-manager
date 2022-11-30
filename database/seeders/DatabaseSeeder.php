@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
                 Gymnastics_gradeSeeder::class,
                 Swimming_gradeSeeder::class,
+                UserSeeder::class,
         ]);
     }
 }
