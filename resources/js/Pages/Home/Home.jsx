@@ -24,7 +24,7 @@ const Home = () => {
            <br />
            <Link href="/chat">Chatsへ</Link>
            <br />
-           <Link href="/messages">メッセージへ</Link>
+           <Link href="/posts">伝言板へ</Link>
        </div>
     </>
   );
