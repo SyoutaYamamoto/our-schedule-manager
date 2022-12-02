@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title', 50);
             $table->foreignId('user_id');
-            $table->dateTime('started_at');
-            $table->dateTime('ended_at');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->timestamps();
         });
     }

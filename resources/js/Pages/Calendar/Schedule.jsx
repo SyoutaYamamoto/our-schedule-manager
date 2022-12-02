@@ -1,159 +1,135 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { Col, Row } from "reactstrap";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
-import Alert from "sweetalert2";
-/*import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles.css";*/
+//import React, {useState} from "react";
+import React, { FC } from 'react';//②
+import FullCalendar from '@fullcalendar/react';//表示①
+//import FullCalendar, { DateSelectArg } from '@fullcalendar/react';//②
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list'; 
+import interactionPlugin from '@fullcalendar/interaction';
+import jaLocale from '@fullcalendar/core/locales/ja';
+import { Inertia } from "@inertiajs/inertia";
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Link } from '@inertiajs/inertia-react'
 
-class App extends Component {
-  state = {
-    calendarEvents: [
-      {
-        title: "Atlanta Monster",
-        start: new Date("2019-04-04 00:00"),
-        id: "99999998"
-      },
-      {
-        title: "My Favorite Murder",
-        start: new Date("2019-04-05 00:00"),
-        id: "99999999"
-      }
-    ],
-    events: [
-      { title: "Event 1", id: "1" },
-      { title: "Event 2", id: "2" },
-      { title: "Event 3", id: "3" },
-      { title: "Event 4", id: "4" },
-      { title: "Event 5", id: "5" }
-    ]
+
+//import './App.css';
+//console.log("test");
+
+function Schedule(props) {
+  //console.log(props.events);
+  const {auth,events}=props;
+
+  console.log(events);
+  const formateDateTime = (date) => {
+    //console.log(typeof date);
+        return (
+            date.getFullYear() +
+            "-" +
+            (date.getMonth() + 1) +
+            "-" +
+            date.getDate() +
+            " " +
+            date.toLocaleTimeString()
+        );
+    };
+  
+  //日付選択の処理
+  const handleDateSelect = (e)=> {
+   const calendarApi = e.view.calendar;
+   
+   //タイトル入力用のポップアップを表示
+   const title = prompt("タイトルを入力してください")
+   
+   //タイトルが入力された際の送信処理
+   if(title){
+     const data = {
+       title: title,
+       user_id: auth.user.id,
+       start: formateDateTime(e.start),
+       end: formateDateTime(e.end),
+     };
+     //console.log(data)
+     Inertia.post("/schedule",data);
+   }
+
+    calendarApi.unselect(); // 選択した部分の選択を解除
+    //更新eventsテーブルから読み込み
   };
-
-  /**
-   * adding dragable properties to external events through javascript
-   */
-  componentDidMount() {
-    let draggableEl = document.getElementById("external-events");
-    new Draggable(draggableEl, {
-      itemSelector: ".fc-event",
-      eventData: function(eventEl) {
-        let title = eventEl.getAttribute("title");
-        let id = eventEl.getAttribute("data");
-        return {
-          title: title,
-          id: id
-        };
-      }
-    });
+  
+  // 既存イベントドラッグ&ドラッグ次の編集処理
+  /*const handleDropEvent = (e) =>{
+    console.log("test");
+    const data ={
+      title: e.event.title,
+      user_id: auth.user.id,
+      start: formateDateTime(e.start),
+      end: formateDateTime(e.end)
+    };
+    console.log(data.start);
+    Inertia.put("/schedule",e.event.id,data);
+    //更新eventsテーブルから読み込み
+  }*/
+  const handleDropEvent = (e) =>{
+    console.log(e.event.start);
+    console.log(e.event.end);
+    const data ={
+      title: e.event.title,
+      user_id: auth.user.id,
+      start: formateDateTime(e.event.start),
+      end: formateDateTime(e.event.end)
+    };
+    //seeder
+    console.log("test");
+    Inertia.put(`/schedule/${e.event.id}`,data);
   }
-
-  /**
-   * when we click on event we are displaying event details
-   */
-  eventClick = eventClick => {
-    Alert.fire({
-      title: eventClick.event.title,
-      html:
-        `<div class="table-responsive">
-      <table class="table">
-      <tbody>
-      <tr >
-      <td>Title</td>
-      <td><strong>` +
-        eventClick.event.title +
-        `</strong></td>
-      </tr>
-      <tr >
-      <td>Start Time</td>
-      <td><strong>
-      ` +
-        eventClick.event.start +
-        `
-      </strong></td>
-      </tr>
-      </tbody>
-      </table>
-      </div>`,
-
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Remove Event",
-      cancelButtonText: "Close"
-    }).then(result => {
-      if (result.value) {
-        eventClick.event.remove(); // It will remove event from the calendar
-        Alert.fire("Deleted!", "Your Event has been deleted.", "success");
-      }
-    });
-  };
-
-  render() {
-    return (
-      <div className="animated fadeIn p-4 demo-app">
-        <Row>
-          <Col lg={3} sm={3} md={3}>
-            <div
-              id="external-events"
-              style={{
-                padding: "10px",
-                width: "80%",
-                height: "auto",
-                maxHeight: "-webkit-fill-available"
-              }}
-            >
-              <p align="center">
-                <strong> Events</strong>
-              </p>
-              {this.state.events.map(event => (
-                <div
-                  className="fc-event"
-                  title={event.title}
-                  data={event.id}
-                  key={event.id}
-                >
-                  {event.title}
-                </div>
-              ))}
-            </div>
-          </Col>
-
-          <Col lg={9} sm={9} md={9}>
-            <div className="demo-app-calendar" id="mycalendartest">
-              <FullCalendar
-                defaultView="dayGridMonth"
-                header={{
-                  left: "prev,next today",
-                  center: "title",
-                  right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-                }}
-                rerenderDelay={10}
-                eventDurationEditable={false}
-                editable={true}
-                droppable={true}
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                ref={this.calendarComponentRef}
-                weekends={this.state.calendarWeekends}
-                events={this.state.calendarEvents}
-                eventDrop={this.drop}
-                // drop={this.drop}
-                eventReceive={this.eventReceive}
-                eventClick={this.eventClick}
-                // selectable={true}
-              />
-            </div>
-          </Col>
-        </Row>
-      </div>
-    );
+  //既存イベントクリック時削除ダイアログ
+  const handleClick = (e) =>{
+    console.log("削除");
+    console.log(e.event.id);
+    if (window.confirm("削除しますか？")) {
+      alert("イベントを削除しました。");
+      Inertia.delete(`/schedule/${e.event.id}`);
+    } 
   }
+    /*const handleClick = (id) => {
+        Inertia.delete(`/schedule/${id}`, {
+            onBefore: () => confirm("本当に削除しますか？"),
+        })
+    }*/
+ 
+  
+
+  return (
+    <>
+    <p>schedule</p>
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin,interactionPlugin]} // 追加
+        initialView="dayGridMonth"
+        locales={[jaLocale]}
+        locale='ja'
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek listWeek', // 追加
+        }}
+        /*events={[
+          {title:'eventを', start: '2022-12-14'},
+          {title:'こんな感じで追加できます', start: '2022-12-15', end: '2022-12-17'}
+        ]}*/
+        events={events}
+        select={handleDateSelect}
+        selectable={true}
+        selectMirror={true}
+        droppable={true}
+        editable={true}
+        eventDrop={handleDropEvent} 
+        eventClick={handleClick}
+      />
+      <Link href="/home">ホームへ</Link>
+    </div>
+    </>
+  );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+export default Schedule;

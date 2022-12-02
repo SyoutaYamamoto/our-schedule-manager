@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 Gymnastics_gradeSeeder::class,
                 Swimming_gradeSeeder::class,
                 UserSeeder::class,
+                EventSeeder::class,
         ]);
     }
 }

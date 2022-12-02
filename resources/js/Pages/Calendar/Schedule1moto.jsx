@@ -13,7 +13,6 @@ import { Link } from '@inertiajs/inertia-react'
 
 
 //import './App.css';
-console.log("a");
 function Schedule() {
   const handleDateSelect = (selectionInfo)=> {
     console.log('selectionInfo: ', selectionInfo); // 選択した範囲の情報をconsoleに出力
@@ -52,32 +51,3 @@ function Schedule() {
 }
 
 export default Schedule;
-
-/*
-function Scedule() {
-  const handleDateSelect = (selectionInfo DateSelectArg)=> {
-    console.log('selectionInfo: ', selectionInfo); // 選択した範囲の情報をconsoleに出力
-    const calendarApi = selectionInfo.view.calendar;
-
-    //calendarApi.unselect(); // 選択した部分の選択を解除
-  };
-
-  return (
-    <div className="demo-app">
-      <div className="demo-app-main">
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} // pluginsにlistGridPluginを設定する
-          initialView="dayGridMonth" // 初期表示のモードを設定する
-          headerToolbar={{
-            right: 'dayGridMonth,timeGridWeek',
-          }}
-          events={'https://fullcalendar.io/api/demo-feeds/events.json'}
-          select={handleDateSelect}
-          selectable={true}
-          selectMirror={true}
-        />
-      </div>
-    </div>
-  );
-};
-export default Scedule;*/
