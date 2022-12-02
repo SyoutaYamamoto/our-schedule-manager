@@ -53,6 +53,7 @@ Route::group(["middleware" => ["auth"]], function() {
     
     //Route::get("/posts/create",'App\Http\Controllers\PostController@create');
     Route::get("/home", [HomeController::class, "home"])->name('home');
+    Route::post("/home", [HomeController::class, "reload"]);
     Route::get("/schedule", [CalendarController::class, "schedule"])->name('events.index');
     Route::post("/schedule", [CalendarController::class, "store"]);
     Route::put("/schedule/{event}", [CalendarController::class, "update"]);
